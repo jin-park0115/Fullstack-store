@@ -1,13 +1,16 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 const Navigation = () => {
   return (
     <Wrap>
-      <ul>
-        <li>로고</li>
-        <li>내정보</li>
+      <p>로고</p>
+      <NavWrap>
+        <li>
+          <Link to="/signup">내정보</Link>
+        </li>
         <li>장바구니</li>
-      </ul>
+      </NavWrap>
     </Wrap>
   );
 };
@@ -16,5 +19,22 @@ export default Navigation;
 
 const Wrap = styled.div`
   display: flex;
-  background-color: red;
+  justify-content: space-between;
+  background-color: gray;
+  padding: 20px;
+  p {
+    cursor: pointer;
+  }
+`;
+
+const NavWrap = styled.ul`
+  display: flex;
+  gap: 20px;
+  cursor: pointer;
+  :hover {
+    color: red;
+  }
+  li {
+    transition: ease-in-out 0.3s;
+  }
 `;

@@ -1,9 +1,14 @@
-import Navigation from "./components/Navigation";
+import { Route, Routes } from "react-router-dom";
+import MainPage from "./pages/MainPage";
+import SingupPage from "./pages/SignupPage";
 
 function App() {
   return (
     <>
-      <Navigation />
+      <Routes>
+        <Route path="/" element={<MainPage />} />
+        <Route path="/signup" element={<SingupPage />} />
+      </Routes>
     </>
   );
 }
