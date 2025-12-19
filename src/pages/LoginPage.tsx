@@ -16,9 +16,21 @@ const LoginPage = () => {
         email,
         password,
       });
+      // 서버 토큰 변수에 담기
+      const token = res.data;
+      // 일단 나는 백엔드 이해를 위해 로컬에다가 저장을 한다
+      localStorage.setItem("spring-token", token);
+
+      // 토큰에서 닉네임 정보 꺼내기
+      const base64Payload = token.split(".")[1]; // payload부분 추출
+      const payload = JSON.parse(atob(base64Payload)); //base64 디코딩 후 객체화
+      const realNickname = decodeURIComponent(payload.nickname);
 
       console.log("로그인 성공", res.data);
-      alert("로그인 완료");
+      console.log("로그인 성공", payload);
+      console.log("로그인 성공", base64Payload);
+
+      alert(`${realNickname}님, 환영합니다`);
       navigate("/");
     } catch (err) {
       console.error(err);
