@@ -1,19 +1,21 @@
 import styled from "styled-components";
 import axios from "axios";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const SignupPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  // const [nickname, setNickname] = useState("");
+  const [nickname, setNickname] = useState("");
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
 
     try {
-      const res = await axios.post("http://localhost:8080/api/members/join", {
+      const res = await axios.post("http://localhost:8080/api/auth/signup", {
         email,
         password,
+        nickname,
       });
 
       console.log("회원가입 성공", res.data);
@@ -40,14 +42,17 @@ const SignupPage = () => {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-        {/* <input
+        <input
           type="text"
           placeholder="닉네임"
           value={nickname}
           onChange={(e) => setNickname(e.target.value)}
-        /> */}
+        />
         <button type="submit">가입하기</button>
       </SignUpForm>
+      <button>
+        <Link to="/login">로그인</Link>
+      </button>
     </Container>
   );
 };
