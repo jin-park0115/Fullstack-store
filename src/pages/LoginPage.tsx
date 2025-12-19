@@ -29,7 +29,7 @@ const LoginPage = () => {
       console.log("로그인 성공", res.data);
       console.log("로그인 성공", payload);
       console.log("로그인 성공", base64Payload);
-
+      localStorage.setItem("nickname", realNickname);
       alert(`${realNickname}님, 환영합니다`);
       navigate("/");
     } catch (err) {
