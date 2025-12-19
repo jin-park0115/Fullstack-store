@@ -1,20 +1,58 @@
 import styled from "styled-components";
+import axios from "axios";
+import { useState } from "react";
 
-const SingupPage = () => {
+const SignupPage = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  // const [nickname, setNickname] = useState("");
+
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
+
+    try {
+      const res = await axios.post("http://localhost:8080/api/members/join", {
+        email,
+        password,
+      });
+
+      console.log("회원가입 성공", res.data);
+      alert("회원가입 성공");
+    } catch (err) {
+      console.error(err);
+      alert("회원가입 실패");
+    }
+  };
+
   return (
     <Container>
       <h1>회원가입</h1>
-      <SignUpForm>
-        <input type="email" placeholder="email" />
-        <input type="password" placeholder="password" />
-        <input type="text" placeholder="닉네임" />
+      <SignUpForm onSubmit={handleSubmit}>
+        <input
+          type="email"
+          placeholder="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+        <input
+          type="password"
+          placeholder="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        {/* <input
+          type="text"
+          placeholder="닉네임"
+          value={nickname}
+          onChange={(e) => setNickname(e.target.value)}
+        /> */}
         <button type="submit">가입하기</button>
       </SignUpForm>
     </Container>
   );
 };
 
-export default SingupPage;
+export default SignupPage;
 const Container = styled.div`
   width: 300px;
   margin: 0 auto;
