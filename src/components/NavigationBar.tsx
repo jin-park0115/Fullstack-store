@@ -1,21 +1,23 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
-const Navigation = () => {
+const NavigationBar = () => {
   return (
     <Wrap>
       <p>로고</p>
       <NavWrap>
         <li>
-          <Link to="/signup">내정보</Link>
+          <Link to="/profile">내정보</Link>
         </li>
-        <li>장바구니</li>
+        <li>
+          <Link to="/cart">장바구니</Link>
+        </li>
       </NavWrap>
     </Wrap>
   );
 };
 
-export default Navigation;
+export default NavigationBar;
 
 const Wrap = styled.div`
   display: flex;

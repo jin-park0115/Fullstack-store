@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import api from "../api";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
@@ -8,11 +9,18 @@ const LoginPage = () => {
 
   const navigate = useNavigate();
 
+  const logout = () => {
+    localStorage.removeItem("spring-token");
+    localStorage.removeItem("nickname");
+    alert("로그아웃 되었습니다.");
+    navigate("/login");
+  };
+
   const handleSubmit = async (e: any) => {
     e.preventDefault();
 
     try {
-      const res = await axios.post("http://localhost:8080/api/auth/login", {
+      const res = await api.post("/api/auth/login", {
         email,
         password,
       });
@@ -26,10 +34,19 @@ const LoginPage = () => {
       const payload = JSON.parse(atob(base64Payload)); //base64 디코딩 후 객체화
       const realNickname = decodeURIComponent(payload.nickname);
 
-      console.log("로그인 성공", res.data);
-      console.log("로그인 성공", payload);
-      console.log("로그인 성공", base64Payload);
       localStorage.setItem("nickname", realNickname);
+
+      // 자동 로그아웃 설정
+      const exp = payload.exp * 1000;
+      const now = Date.now();
+      const remainingTime = exp - now;
+
+      if (remainingTime > 0) {
+        setTimeout(() => {
+          logout();
+        }, remainingTime);
+      }
+
       alert(`${realNickname}님, 환영합니다`);
       navigate("/");
     } catch (err) {
