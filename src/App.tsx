@@ -1,4 +1,5 @@
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
+import ProtectedRoute from "./components/ProtectedRoute";
 import useAuthTimeOut from "./hooks/useAuthTimeout";
 import CartPage from "./pages/CartPage";
 import LoginPage from "./pages/LoginPage";
@@ -11,11 +12,33 @@ function App() {
   return (
     <>
       <Routes>
-        <Route path="/" element={<MainPage />} />
-        <Route path="/signup" element={<SingupPage />} />
+        <Route
+          path="/"
+          element={
+            <ProtectedRoute>
+              <MainPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/cart"
+          element={
+            <ProtectedRoute>
+              <CartPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute>
+              <ProfilePage />
+            </ProtectedRoute>
+          }
+        />
         <Route path="/login" element={<LoginPage />} />
-        <Route path="/cart" element={<CartPage />} />
-        <Route path="/profile" element={<ProfilePage />} />
+        <Route path="/signup" element={<SingupPage />} />
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </>
   );
